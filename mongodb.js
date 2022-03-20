@@ -1,9 +1,11 @@
-const mongodb= require('mongodb')
 
-const MongoClient=mongodb.MongoClient
+const {MongoClient,ObjectID} =require('mongodb')
 
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databseName='task-manager'
+
+const id=new ObjectID()
+console.log(id);
 
 MongoClient.connect(
   connectionURL,
@@ -15,39 +17,15 @@ MongoClient.connect(
 
     const db=client.db(databseName)
 
-//     db.collection('users').insertMany([{
-//         name:'harvey',
-//         age:34
-//     },{
-// name:'mike',
-// age:69
-//     }],(error,result)=>{
-// if (error) {
-
-//     return console.log('unable to insert user');
+    db.collection('users').insertOne(
     
-// }
-
-// console.log(result.ops);
-//     })
-
-
-
-    db.collection('tasks').insertMany(
-      [
         {
-          description: 'NodeJS',
-          completed: false,
+          _id: id,
+          name: 'pam',
+          age: 48,
         },
-        {
-          description: 'Redux',
-          completed: false,
-        },
-        {
-          description: 'Angular',
-          completed: true,
-        },
-      ],
+        
+      
       (error, result) => {
         if (error) {
           return console.log('unable to insert user');
@@ -56,6 +34,32 @@ MongoClient.connect(
         console.log(result.ops);
       }
     );
+
+
+
+    // db.collection('tasks').insertMany(
+    //   [
+    //     {
+    //       description: 'NodeJS',
+    //       completed: false,
+    //     },
+    //     {
+    //       description: 'Redux',
+    //       completed: false,
+    //     },
+    //     {
+    //       description: 'Angular',
+    //       completed: true,
+    //     },
+    //   ],
+    //   (error, result) => {
+    //     if (error) {
+    //       return console.log('unable to insert user');
+    //     }
+
+    //     console.log(result.ops);
+    //   }
+    // );
 
 
   }
