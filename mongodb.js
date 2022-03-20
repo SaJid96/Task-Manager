@@ -5,7 +5,6 @@ const connectionURL = 'mongodb://127.0.0.1:27017';
 const databseName='task-manager'
 
 const id=new ObjectID()
-console.log(id);
 
 MongoClient.connect(
   connectionURL,
@@ -17,49 +16,23 @@ MongoClient.connect(
 
     const db=client.db(databseName)
 
-    db.collection('users').insertOne(
-    
-        {
-          _id: id,
-          name: 'pam',
-          age: 48,
-        },
-        
-      
-      (error, result) => {
+    db.collection('tasks').findOne(
+      { _id: new ObjectID('62363a46e7cd2eb7834c8502') },
+      (error, user) => {
         if (error) {
-          return console.log('unable to insert user');
+          return console.log(error);
         }
-
-        console.log(result.ops);
+        console.log(user);
       }
     );
+   
+
+    db.collection('tasks').find({completed:false}).toArray((error,users)=>{
+
+        console.log(users);
+    })
 
 
-
-    // db.collection('tasks').insertMany(
-    //   [
-    //     {
-    //       description: 'NodeJS',
-    //       completed: false,
-    //     },
-    //     {
-    //       description: 'Redux',
-    //       completed: false,
-    //     },
-    //     {
-    //       description: 'Angular',
-    //       completed: true,
-    //     },
-    //   ],
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log('unable to insert user');
-    //     }
-
-    //     console.log(result.ops);
-    //   }
-    // );
 
 
   }
