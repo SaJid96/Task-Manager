@@ -32,11 +32,24 @@ const User = mongoose.model('User', {
       }
     },
   },
+
+  password: {
+    type: String,
+    required: true,
+    minlength: 7,
+    trim: true,
+    validate(value) {
+      if (value.toLowerCase().includes('password')) {
+        throw new Error('Password cannot contain "password"');
+      }
+    },
+  },
 });
 
 const me = new User({
   name: 'colkcke',
-  email:'kc',
+  email:'kc@gmail.com',
+  password:'phone867'
   
 });
 
