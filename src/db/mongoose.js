@@ -46,34 +46,32 @@ const User = mongoose.model('User', {
   },
 });
 
-const me = new User({
-  name: 'colkcke',
-  email:'kc@gmail.com',
-  password:'phone867'
+// const me = new User({
+//   name: 'colkcke',
+//   email:'kc@gmail.com',
+//   password:'phone867'
   
-});
+// });
+//  
 
-me.save()
-  .then(() => console.log(me))
-  .catch((e) => {
+
+const Tasks=mongoose.model('Tasks',{
+    description:{
+        type:String,
+        trim:true,
+        required:true,
+    },
+    completed:{
+        type:Boolean,
+        default:false
+    },
+})
+
+const task=new Tasks({
+    description:'ReactJS',
+    
+})
+
+task.save().then(()=>console.log(task)).catch((e) => {
     console.log('Error!', e);
   });
-
-
-// const Tasks=mongoose.model('Tasks',{
-//     description:{
-//         type:String,
-//     },
-//     completed:{
-//         type:Boolean,
-//     },
-// })
-
-// const task=new Tasks({
-//     description:'ReactJS',
-//     completed:true,
-// })
-
-// task.save().then(()=>console.log(task)).catch((e) => {
-//     console.log('Error!', e);
-//   });
