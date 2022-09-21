@@ -3,6 +3,7 @@ const User = require('../models/user')
 const auth = require('../middleware/auth')
 const router = new express.Router()
 const sharp=require('sharp')
+const { sendWelcomeEmail,sendCancelationEmail } = require('../emails/account')
 
 
 
@@ -12,6 +13,8 @@ router.post('/users', async (req, res) => {
 
     try {
         await user.save()
+        sendWelcomeEmail(user.email, user.name)
+
         const token = await user.generateAuthToken()
         res.status(201).send({ user, token })
     } catch (e) {
@@ -90,6 +93,7 @@ router.delete('/users/me', auth ,async (req, res) => {
     try {
 
         await req.user.remove()
+        sendCancelationEmail(req.user.email, req.user.name)
       
         res.send(req.user)
     } catch (e) {
